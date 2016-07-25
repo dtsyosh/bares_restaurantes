@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import modelo.Conta;
 
 /**
@@ -51,7 +52,7 @@ public class ContaDAO {
             stmt.execute();
             stmt.close();
         }catch(SQLException e){
-            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "Não foi possível realizar a operação");
         }
     }
     public List<Conta> getListaContas(){
@@ -64,9 +65,23 @@ public class ContaDAO {
             rs.close();
             stmt.close();
         }catch(SQLException e){
-            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "Não foi possível realizar a operação");
         }
         
         return listaContas;
+    }
+    
+    public void pagarConta(int id, int idPagante) {
+        String sql = "update conta set pago = ? where id = ?";
+        
+        try(PreparedStatement stmt = conexao.prepareStatement(sql)){
+            stmt.setInt(1, id);
+            stmt.setInt(2, idPagante);
+            
+            stmt.execute();
+            stmt.close();
+        }catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, "Não foi possível realizar a operação");
+        }
     }
 }
