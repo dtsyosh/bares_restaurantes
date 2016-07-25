@@ -15,15 +15,17 @@ import modelo.*;
 public class ContaController {
     
     private List<Conta> listaConta;
+    private ContaDAO contaDAO;
 
     public ContaController() {
         this.listaConta = new ContaDAO().getListaContas();
+        this.contaDAO = new ContaDAO();
     }
     
     
     
     public void cadastrarNovaConta(String descricao, Double valor, int pago) {
-        new ContaDAO().adicionarConta(new Conta(descricao, valor, pago));
+        contaDAO.adicionarConta(new Conta(descricao, valor, pago));
         this.listaConta.add(new Conta(descricao, valor, pago));
     }
 
@@ -32,7 +34,8 @@ public class ContaController {
         return this.listaConta;
     }
     
-    public void pagarConta(int idConta, int idPago) {  
+    public void pagarConta(int idConta, int idPago) {
+        contaDAO.pagarConta(idConta, idPago);
         this.listaConta.get(idConta).setPago(idPago);
     }
 }

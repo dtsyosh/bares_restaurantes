@@ -6,6 +6,7 @@
 package visao;
 
 import controle.ContaController;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Conta;
 
@@ -180,7 +181,18 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void btnPagarContaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagarContaActionPerformed
-
+       try{
+        int pago = contaController.getListaConta().get(tabelaConta.getSelectedRow()).getPago();
+        
+        if(pago != 0) {
+            JOptionPane.showMessageDialog(null, "Esta conta ja foi paga.");
+        } else {
+            JOptionPane.showOptionDialog(null, null, "Selecione quem pagou a conta",
+                    JOptionPane.OK_OPTION, JOptionPane.PLAIN_MESSAGE, null, new Object[]{"Diego", "Geovana", "Ambos"}, "Diego");
+        }
+       }catch(ArrayIndexOutOfBoundsException e){
+           JOptionPane.showMessageDialog(null, "Selecione uma conta!");
+       }
     }//GEN-LAST:event_btnPagarContaActionPerformed
 
     private void btnCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcularActionPerformed
