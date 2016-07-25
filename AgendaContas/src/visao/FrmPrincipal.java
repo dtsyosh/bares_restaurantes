@@ -23,7 +23,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         initComponents();
         tabela = (DefaultTableModel) tabelaConta.getModel();
         contaController = new ContaController();
-        atualizarTabela();
+        preencherTabela();
 
     }
 
@@ -271,11 +271,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnCalcularActionPerformed
 
-    private void atualizarTabela() {
-        for (int i = 0; i < tabela.getRowCount(); i++) {
-            tabela.removeRow(i);
-        }
-
+    private void preencherTabela() {
         contaController.getListaConta().forEach((x) -> {
             String pago = "";
             switch (x.getPago()) {
@@ -294,6 +290,25 @@ public class FrmPrincipal extends javax.swing.JFrame {
             tabela.addRow(new Object[]{x.getDescricao(), x.getValor(),
                 pago});
         });
+    }
+    
+    private void atualizarTabela() {
+        String pago = "";
+        Conta x = contaController.getListaConta().get(contaController.getListaConta().size() - 1);
+            switch (x.getPago()) {
+                case 0:
+                    pago = "Pendente";
+                    break;
+                case 1:
+                    pago = "Diego";
+                    break;
+                case 2:
+                    pago = "Geovana";
+                    break;
+                case 3:
+                    pago = "Diego & Geovana";
+            }
+            tabela.addRow(new Object[]{x.getDescricao(), x.getValor(), pago});
     }
     public ContaController getContaController() {
         return this.contaController;
