@@ -14,7 +14,6 @@ public class DialogCadastrarConta extends javax.swing.JDialog {
     public DialogCadastrarConta(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        contaController = new FrmPrincipal().getContaController();
     }
 
     /**
@@ -39,6 +38,7 @@ public class DialogCadastrarConta extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblDescricao.setText("Descrição/Nome");
 
@@ -82,6 +82,8 @@ public class DialogCadastrarConta extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        getContentPane().add(pnlCampos, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 0, -1, -1));
+
         btnConfirmar.setText("Confirmar");
         btnConfirmar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -100,43 +102,24 @@ public class DialogCadastrarConta extends javax.swing.JDialog {
         pnlBotoes.setLayout(pnlBotoesLayout);
         pnlBotoesLayout.setHorizontalGroup(
             pnlBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlBotoesLayout.createSequentialGroup()
-                .addContainerGap(150, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBotoesLayout.createSequentialGroup()
+                .addContainerGap(114, Short.MAX_VALUE)
                 .addComponent(btnConfirmar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnCancelar)
-                .addContainerGap())
+                .addGap(42, 42, 42))
         );
         pnlBotoesLayout.setVerticalGroup(
             pnlBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBotoesLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(8, Short.MAX_VALUE)
                 .addGroup(pnlBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnConfirmar)
                     .addComponent(btnCancelar))
                 .addContainerGap())
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(pnlCampos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pnlBotoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(pnlCampos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlBotoes, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+        getContentPane().add(pnlBotoes, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 150, -1, -1));
 
         pack();
         setLocationRelativeTo(null);
@@ -158,6 +141,9 @@ public class DialogCadastrarConta extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
+    public void setContaController (ContaController contaController) {
+        this.contaController = contaController;
+    }
     /**
      * @param args the command line arguments
      */

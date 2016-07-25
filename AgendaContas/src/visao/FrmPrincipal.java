@@ -6,7 +6,6 @@
 package visao;
 
 import controle.ContaController;
-import java.awt.Color;
 import javax.swing.table.DefaultTableModel;
 import modelo.Conta;
 
@@ -58,12 +57,15 @@ public class FrmPrincipal extends javax.swing.JFrame {
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        pnlBotoes.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         btnCadastrarConta.setText("Cadastrar Conta");
         btnCadastrarConta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCadastrarContaActionPerformed(evt);
             }
         });
+        pnlBotoes.add(btnCadastrarConta, new org.netbeans.lib.awtextra.AbsoluteConstraints(433, 53, 187, -1));
 
         btnPagarConta.setText("Pagar Conta");
         btnPagarConta.addActionListener(new java.awt.event.ActionListener() {
@@ -71,6 +73,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 btnPagarContaActionPerformed(evt);
             }
         });
+        pnlBotoes.add(btnPagarConta, new org.netbeans.lib.awtextra.AbsoluteConstraints(433, 20, 187, -1));
 
         btnCalcular.setText("Calcular");
         btnCalcular.addActionListener(new java.awt.event.ActionListener() {
@@ -78,102 +81,43 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 btnCalcularActionPerformed(evt);
             }
         });
+        pnlBotoes.add(btnCalcular, new org.netbeans.lib.awtextra.AbsoluteConstraints(433, 86, 187, -1));
 
         lblDiego.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblDiego.setText("Diego:");
+        pnlBotoes.add(lblDiego, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 21, -1, -1));
 
         lblValorAtualDiego.setFont(new java.awt.Font("Droid Sans", 1, 12)); // NOI18N
         lblValorAtualDiego.setText("valor");
+        pnlBotoes.add(lblValorAtualDiego, new org.netbeans.lib.awtextra.AbsoluteConstraints(93, 21, -1, -1));
 
         lblGeovana.setText("Geovana:");
+        pnlBotoes.add(lblGeovana, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 54, -1, -1));
 
         lblValorAtualGeovana.setFont(new java.awt.Font("Droid Sans", 1, 12)); // NOI18N
         lblValorAtualGeovana.setText("valor");
+        pnlBotoes.add(lblValorAtualGeovana, new org.netbeans.lib.awtextra.AbsoluteConstraints(93, 54, -1, -1));
 
         lblTotal.setText("Total:");
+        pnlBotoes.add(lblTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 87, -1, -1));
 
         lblValorTotal.setFont(new java.awt.Font("Droid Sans", 1, 12)); // NOI18N
         lblValorTotal.setText("valor");
+        pnlBotoes.add(lblValorTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(93, 87, -1, -1));
 
         lblValorAtual.setText("Valor atual");
+        pnlBotoes.add(lblValorAtual, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 0, -1, -1));
 
         lblValorDesejado.setText("Valor desejado");
+        pnlBotoes.add(lblValorDesejado, new org.netbeans.lib.awtextra.AbsoluteConstraints(193, 0, -1, -1));
 
         lblValorDesejadoGeovana.setFont(new java.awt.Font("Droid Sans", 1, 12)); // NOI18N
         lblValorDesejadoGeovana.setText("valor");
+        pnlBotoes.add(lblValorDesejadoGeovana, new org.netbeans.lib.awtextra.AbsoluteConstraints(223, 54, -1, -1));
 
         lblValorDesejadoDiego.setFont(new java.awt.Font("Droid Sans", 1, 12)); // NOI18N
         lblValorDesejadoDiego.setText("valor");
-
-        javax.swing.GroupLayout pnlBotoesLayout = new javax.swing.GroupLayout(pnlBotoes);
-        pnlBotoes.setLayout(pnlBotoesLayout);
-        pnlBotoesLayout.setHorizontalGroup(
-            pnlBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlBotoesLayout.createSequentialGroup()
-                .addGap(70, 70, 70)
-                .addComponent(lblValorAtual)
-                .addGap(43, 43, 43)
-                .addComponent(lblValorDesejado)
-                .addContainerGap(345, Short.MAX_VALUE))
-            .addGroup(pnlBotoesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(pnlBotoesLayout.createSequentialGroup()
-                        .addGroup(pnlBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblGeovana)
-                            .addComponent(lblTotal))
-                        .addGap(28, 28, 28)
-                        .addGroup(pnlBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblValorAtualGeovana)
-                            .addComponent(lblValorTotal)))
-                    .addGroup(pnlBotoesLayout.createSequentialGroup()
-                        .addComponent(lblDiego)
-                        .addGap(28, 28, 28)
-                        .addComponent(lblValorAtualDiego)))
-                .addGap(103, 103, 103)
-                .addGroup(pnlBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblValorDesejadoGeovana)
-                    .addComponent(lblValorDesejadoDiego))
-                .addGap(183, 183, 183)
-                .addGroup(pnlBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnPagarConta, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
-                    .addComponent(btnCalcular, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCadastrarConta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-        );
-        pnlBotoesLayout.setVerticalGroup(
-            pnlBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBotoesLayout.createSequentialGroup()
-                .addGroup(pnlBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblValorAtual)
-                    .addComponent(lblValorDesejado))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(pnlBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlBotoesLayout.createSequentialGroup()
-                        .addGroup(pnlBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblDiego)
-                            .addComponent(lblValorAtualDiego)
-                            .addComponent(lblValorDesejadoDiego))
-                        .addGap(18, 18, 18)
-                        .addGroup(pnlBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblGeovana)
-                            .addComponent(lblValorAtualGeovana)))
-                    .addGroup(pnlBotoesLayout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addComponent(lblValorDesejadoGeovana)))
-                .addGap(18, 18, 18)
-                .addGroup(pnlBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblTotal)
-                    .addComponent(lblValorTotal))
-                .addGap(17, 17, 17))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBotoesLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnPagarConta)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnCadastrarConta)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnCalcular)
-                .addContainerGap())
-        );
+        pnlBotoes.add(lblValorDesejadoDiego, new org.netbeans.lib.awtextra.AbsoluteConstraints(223, 21, -1, -1));
 
         getContentPane().add(pnlBotoes, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 6, 620, -1));
 
@@ -225,7 +169,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCadastrarContaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarContaActionPerformed
-        new DialogCadastrarConta(this, true).setVisible(true);
+        DialogCadastrarConta dialog = new DialogCadastrarConta(this, true);
+        dialog.setContaController(contaController);
+        dialog.setVisible(true);
         atualizarTabela();
     }//GEN-LAST:event_btnCadastrarContaActionPerformed
 
@@ -263,8 +209,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
         lblValorAtualGeovana.setText(String.valueOf(geovanaTotal));
         Double valorDesejadoDiego, valorDesejadoGeovana;
 
-        valorDesejadoDiego = geovanaTotal - (total / 2);
-        valorDesejadoGeovana = diegoTotal - (total / 2);
+        valorDesejadoDiego = diegoTotal - (total / 2);
+        valorDesejadoGeovana = geovanaTotal - (total / 2);
 
         lblValorDesejadoDiego.setText(String.valueOf(valorDesejadoDiego));
         lblValorDesejadoGeovana.setText(String.valueOf(valorDesejadoGeovana));
@@ -294,7 +240,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
     
     private void atualizarTabela() {
         String pago = "";
-        Conta x = contaController.getListaConta().get(contaController.getListaConta().size() - 1);
+        System.out.println(contaController.getListaConta().size()-1);
+        Conta x = contaController.getListaConta().get(contaController.getListaConta().size()-1);
             switch (x.getPago()) {
                 case 0:
                     pago = "Pendente";
@@ -310,7 +257,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
             tabela.addRow(new Object[]{x.getDescricao(), x.getValor(), pago});
     }
-    public ContaController getContaController() {
+    protected ContaController getContaController() {
         return this.contaController;
     }
 

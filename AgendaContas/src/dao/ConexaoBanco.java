@@ -13,9 +13,9 @@ public class ConexaoBanco {
      
     public Connection getConnection() throws ClassNotFoundException{
         try{
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
             
-            return DriverManager.getConnection("jdbc:mysql://85.10.205.173/agenda_conta", "dtsyosh", "3bjmf82");
+            return DriverManager.getConnection("jdbc:derby://localhost/agenda_conta", "dtsyosh", "3bjmf82,");
         }catch(SQLException e){
             throw new RuntimeException(e);
         }
