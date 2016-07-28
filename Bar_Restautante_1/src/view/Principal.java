@@ -5,14 +5,10 @@
  */
 package view;
 
-import dao.InsertDAO;
-import dao.SelectDAO;
-import java.beans.IntrospectionException;
-import java.lang.reflect.InvocationTargetException;
-import java.sql.SQLException;
+import controller.GenericController;
 import java.util.ArrayList;
 import java.util.List;
-import model.estado;
+import model.categoria_produtos;
 
 /**
  *
@@ -21,24 +17,18 @@ import model.estado;
 public class Principal {
 
     public static void main(String[] args) throws ClassNotFoundException {
-
-        List<estado> lista = new ArrayList();
-
-        lista.add(new estado("ativo"));
-        lista.add(new estado("inativo"));
-
-        InsertDAO<estado> inserirEstado = new InsertDAO(estado.class);
-        SelectDAO<estado> selectEstado = new SelectDAO(estado.class);
-        try {
-
-            inserirEstado.inserirObjetos(lista);
-            lista = selectEstado.selecionarObjetos();
-
-            for (estado o : lista) {
-                System.out.println(o.getDescricao());
-            }
-        } catch (SQLException | IntrospectionException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | InstantiationException e) {
+        
+        
+        List<categoria_produtos> lista = new ArrayList();
+        
+        lista.add(new categoria_produtos("Alimento"));
+        lista.add(new categoria_produtos("Bebida"));
+        
+        new GenericController(categoria_produtos.class).inserir(lista);
+        lista = new GenericController(categoria_produtos.class).select();
+        
+        for(categoria_produtos o : lista) {
+            System.out.println(o.getDescricao());
         }
-
     }
 }
