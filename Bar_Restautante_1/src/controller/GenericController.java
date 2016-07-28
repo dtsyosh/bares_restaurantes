@@ -23,15 +23,21 @@ public class GenericController<T> {
         this.tipo = tipo;
     }
 
-    public void inserir(List<T> lista) throws Exception {
-        new InsertDAO(tipo).inserirObjetos(lista);
+    public void inserir(List<T> lista) {
+        try {
+            new InsertDAO(tipo).inserirObjetos(lista);
+        } catch (Exception e) {
+        }
     }
 
-    public List<T> select() throws Exception {
+    public List<T> select() {
+        try {
+            List<T> lista = new SelectDAO(tipo).selecionarObjetos();
 
-        List<T> lista = new SelectDAO(tipo).selecionarObjetos();
-
-        return lista;
+            return lista;
+        } catch (Exception e) {
+        }
+        return null;
     }
 
 }
