@@ -5,9 +5,6 @@
  */
 package model;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 /**
  *
  * @author yosh
@@ -24,13 +21,11 @@ public class pedidos {
         this.mesa_id = mesa_id;
         this.estado_id = estado_id;
     }
-    
-    public pedidos(ResultSet rs) throws SQLException {
-        this.id_pedido = rs.getInt("id_pedido");
-        this.estado_id = rs.getInt("estado_id");
-        this.funcionario_id = rs.getInt("funcionario_id");
-        this.mesa_id = rs.getInt("mesa_id");
+
+    public pedidos() {
     }
+    
+    
 
     public int getId_pedido() {
         return id_pedido;

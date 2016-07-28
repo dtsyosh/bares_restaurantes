@@ -6,8 +6,6 @@
 package model;
 
 import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 /**
  *
@@ -27,14 +25,11 @@ public class pagamentos {
         this.forma_pgto_id = forma_pgto_id;
         this.data_hora = data_hora;
     }
-    
-    public pagamentos(ResultSet rs) throws SQLException {
-        this.id_pagamento = rs.getInt("id_pagamento");
-        this.caixa_id = rs.getInt("caixa_id");
-        this.pedido_id = rs.getInt("pedido_id");
-        this.forma_pgto_id = rs.getInt("forma_pgto_id");
-        this.data_hora = rs.getDate("data_hora");
+
+    public pagamentos() {
     }
+    
+    
     public int getId_pagamento() {
         return id_pagamento;
     }

@@ -6,8 +6,6 @@
 package model;
 
 import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 /**
  *
@@ -30,14 +28,7 @@ public class caixa {
         this.valor_inicial = valor_inicial;
     }
 
-    public caixa(ResultSet rs) throws SQLException {
-        this.id_caixa = rs.getInt("id_caixa");
-        this.funcionario_id = rs.getInt("funcionario_id");
-        this.estado_id = rs.getInt("estado_id");
-        this.data_hora_abertura = rs.getDate("data_hora_abertura");
-        this.data_hora_fechamento = rs.getDate("data_hora_fechamento");
-        this.valor_inicial = rs.getDouble("valor_inicial");
-        this.valor_final = rs.getDouble("valor_final");
+    public caixa() {
     }
 
     

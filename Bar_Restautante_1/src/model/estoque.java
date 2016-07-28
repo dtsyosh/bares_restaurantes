@@ -6,8 +6,6 @@
 package model;
 
 import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 /**
  *
@@ -24,13 +22,11 @@ public class estoque {
         this.quantidade = quantidade;
         this.data_compra = data_compra;
     }
-    
-    public estoque(ResultSet rs) throws SQLException {
-        this.id_estoque = rs.getInt("id_estoque");
-        this.unidade_id = rs.getInt("unidade_id");
-        this.quantidade = rs.getInt("quantidade");
-        this.data_compra = rs.getDate("data_compra");
+
+    public estoque() {
     }
+    
+    
 
     public int getId_estoque() {
         return id_estoque;

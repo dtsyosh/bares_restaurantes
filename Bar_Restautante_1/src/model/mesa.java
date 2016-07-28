@@ -5,9 +5,6 @@
  */
 package model;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 /**
  *
  * @author yosh
@@ -21,10 +18,10 @@ public class mesa {
         this.codigo_mesa = codigo_mesa;
     }
 
-    public mesa(ResultSet rs) throws SQLException {
-        this.id_mesa = rs.getInt("id_mesa");
-        this.codigo_mesa = rs.getInt("codigo_mesa");
+    public mesa() {
     }
+
+    
     public int getId_mesa() {
         return id_mesa;
     }

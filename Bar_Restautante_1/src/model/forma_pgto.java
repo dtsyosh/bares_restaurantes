@@ -20,11 +20,11 @@ public class forma_pgto {
     public forma_pgto(String descricao) {
         this.descricao = descricao;
     }
-    
-    public forma_pgto(ResultSet rs) throws SQLException {
-        this.id_forma_pgto = rs.getInt("id_forma_pgto");
-        this.descricao = rs.getString("descricao");
+
+    public forma_pgto() {
     }
+    
+    
 
     public int getId_forma_pgto() {
         return id_forma_pgto;
