@@ -5,9 +5,7 @@
  */
 package view;
 
-import controller.GenericController;
-import java.util.ArrayList;
-import java.util.List;
+import dao.DeleteDAO;
 import model.categoria_produtos;
 
 /**
@@ -19,16 +17,6 @@ public class Principal {
     public static void main(String[] args) throws ClassNotFoundException {
         
         
-        List<categoria_produtos> lista = new ArrayList();
-        
-        lista.add(new categoria_produtos("Alimento"));
-        lista.add(new categoria_produtos("Bebida"));
-        
-        new GenericController(categoria_produtos.class).inserir(lista);
-        lista = new GenericController(categoria_produtos.class).select();
-        
-        for(categoria_produtos o : lista) {
-            System.out.println(o.getDescricao());
-        }
+        new DeleteDAO<>(categoria_produtos.class).deletarObjeto(1);
     }
 }
