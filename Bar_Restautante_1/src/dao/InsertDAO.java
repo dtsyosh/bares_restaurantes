@@ -19,7 +19,7 @@ import java.util.List;
  * @author yosh
  * @param <T>
  */
-public class InsertDAO<T> extends GenericDAO<T>{
+public class InsertDAO<T> extends GenericDAO<T> {
 
     public InsertDAO(Class<T> tipo) throws ClassNotFoundException {
         super(tipo, new ConexaoBanco().getConnection());
@@ -28,7 +28,7 @@ public class InsertDAO<T> extends GenericDAO<T>{
     @Override
     protected String createQuery() {
         StringBuilder sb = new StringBuilder();
-        
+
         sb.append("INSERT INTO ");
         sb.append(tipo.getSimpleName());
         sb.append("(");
@@ -37,46 +37,71 @@ public class InsertDAO<T> extends GenericDAO<T>{
         sb.append(" VALUES(");
         sb.append(super.getColumns(true));
         sb.append(")");
-        
+
         return sb.toString();
     }
-    
+
     /**
      * Insere no banco a lista de objetos passada por parâmetro;
+     *
      * @param lista
      * @throws SQLException
      * @throws IntrospectionException
      * @throws IllegalAccessException
      * @throws IllegalArgumentException
-     * @throws InvocationTargetException 
+     * @throws InvocationTargetException
      */
     public void inserirObjetos(List<T> lista) throws SQLException,
             IntrospectionException, IllegalAccessException,
             IllegalArgumentException, InvocationTargetException {
         PreparedStatement stmt = null;
-        
+
         try {
             stmt = conexao.prepareStatement(query);
-            
-            for(T instancia : lista) {
+
+            for (T instancia : lista) {
                 int i = 0;
-                
-                for(Field campo : tipo.getDeclaredFields()) {
-                    
+
+                for (Field campo : tipo.getDeclaredFields()) {
+
                     PropertyDescriptor pd = new PropertyDescriptor(campo.getName(), tipo);
                     Method metodo = pd.getReadMethod();
-                    
+
                     Object valor = metodo.invoke(instancia);
-                    
+
                     stmt.setObject(++i, valor);
                 }
                 stmt.addBatch();
             }
-            
+
             stmt.executeBatch();
         } finally {
             stmt.close();
         }
     }
-    
+
+    public void inserirObjetos(T novoProduto) throws SQLException,
+            IntrospectionException, IllegalAccessException,
+            IllegalArgumentException, InvocationTargetException {
+        PreparedStatement stmt = null;
+
+        try {
+            stmt = conexao.prepareStatement(query);
+
+            for (Field campo : tipo.getDeclaredFields()) {
+
+                PropertyDescriptor pd = new PropertyDescriptor(campo.getName(), tipo);
+                Method metodo = pd.getReadMethod();
+
+                Object valor = metodo.invoke(novoProduto);
+
+                stmt.setObject(1, valor);
+            }
+            stmt.execute();
+
+        } finally {
+            stmt.close();
+        }
+    }
+
 }
