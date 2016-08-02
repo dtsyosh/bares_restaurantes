@@ -9,6 +9,7 @@ import dao.DeleteDAO;
 import dao.InsertDAO;
 import dao.SelectDAO;
 import java.util.List;
+import relatorios.GenericREL;
 
 /**
  *
@@ -51,6 +52,10 @@ public class GenericController<T> {
         try {
             new DeleteDAO(tipo).deletarObjeto(id);
         } catch (Exception e){}
+    }
+    
+    public void criarRelatorio(List<T> lista) {
+        new GenericREL(tipo).criarRelatorio(lista);
     }
 
 }
