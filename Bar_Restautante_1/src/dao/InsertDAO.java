@@ -83,24 +83,26 @@ public class InsertDAO<T> extends GenericDAO<T> {
     public void inserirObjetos(T novoProduto) throws SQLException,
             IntrospectionException, IllegalAccessException,
             IllegalArgumentException, InvocationTargetException {
-        PreparedStatement stmt = null;
+       
 
-        try {
-            stmt = conexao.prepareStatement(query);
-
+        try (PreparedStatement stmt = conexao.prepareStatement(query)){
+            
+            int i = 0;
             for (Field campo : tipo.getDeclaredFields()) {
 
                 PropertyDescriptor pd = new PropertyDescriptor(campo.getName(), tipo);
+                
                 Method metodo = pd.getReadMethod();
 
                 Object valor = metodo.invoke(novoProduto);
 
-                stmt.setObject(1, valor);
+                stmt.setObject(++i, valor);
+
             }
             stmt.execute();
-
-        } finally {
             stmt.close();
+        } catch(SQLException e) {
+            e.printStackTrace();
         }
     }
 
