@@ -21,7 +21,14 @@ public abstract class GenericController<T> {
 
     protected Class<T> tipo;
 
-    public GenericController(Class<T> tipo) {
+    public GenericController(){
+    }
+
+    public Class<T> getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(Class<T> tipo) {
         this.tipo = tipo;
     }
 
