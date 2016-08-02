@@ -12,13 +12,13 @@ package model;
 public class funcionario {
     private int id_funcionario;
     private String nome_funcionario;
-    private String numero_celular;
+    private String celular;
     private int rg;
     private int estado_id;
 
     public funcionario(String nome_funcionario, String numero_celular, int rg, int estado_id) {
         this.nome_funcionario = nome_funcionario;
-        this.numero_celular = numero_celular;
+        this.celular = numero_celular;
         this.rg = rg;
         this.estado_id = estado_id;
     }
@@ -43,13 +43,15 @@ public class funcionario {
         this.nome_funcionario = nome_funcionario;
     }
 
-    public String getNumero_celular() {
-        return numero_celular;
+    public String getCelular() {
+        return celular;
     }
 
-    public void setNumero_celular(String numero_celular) {
-        this.numero_celular = numero_celular;
+    public void setCelular(String celular) {
+        this.celular = celular;
     }
+
+ 
 
     public int getRg() {
         return rg;
