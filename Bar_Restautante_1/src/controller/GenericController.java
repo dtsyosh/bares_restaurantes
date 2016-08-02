@@ -5,6 +5,7 @@
  */
 package controller;
 
+import dao.DeleteDAO;
 import dao.InsertDAO;
 import dao.SelectDAO;
 import java.util.List;
@@ -30,6 +31,12 @@ public class GenericController<T> {
         }
     }
 
+       public void inserir(T novoProduto) {
+        try {
+            new InsertDAO(tipo).inserirObjetos(novoProduto);
+        } catch (Exception e) {
+        }
+    }
     public List<T> select() {
         try {
             List<T> lista = new SelectDAO(tipo).selecionarObjetos();
@@ -38,6 +45,12 @@ public class GenericController<T> {
         } catch (Exception e) {
         }
         return null;
+    }
+    
+    public void deletar (int id) {
+        try {
+            new DeleteDAO(tipo).deletarObjeto(id);
+        } catch (Exception e){}
     }
 
 }
