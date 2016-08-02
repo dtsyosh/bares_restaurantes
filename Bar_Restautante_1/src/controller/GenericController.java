@@ -17,7 +17,7 @@ import relatorios.GenericREL;
  * @param <T>
  *
  */
-public class GenericController<T> {
+public abstract class GenericController<T> {
 
     protected Class<T> tipo;
 
@@ -25,19 +25,20 @@ public class GenericController<T> {
         this.tipo = tipo;
     }
 
-    public void inserir(List<T> lista) {
+    protected void inserir(List<T> lista) {
         try {
             new InsertDAO(tipo).inserirObjetos(lista);
         } catch (Exception e) {
         }
     }
 
-       public void inserir(T novoProduto) {
+    protected void inserir(T novoDado) {
         try {
-            new InsertDAO(tipo).inserirObjetos(novoProduto);
+            new InsertDAO(tipo).inserirObjetos(novoDado);
         } catch (Exception e) {
         }
     }
+
     public List<T> select() {
         try {
             List<T> lista = new SelectDAO(tipo).selecionarObjetos();
@@ -47,13 +48,14 @@ public class GenericController<T> {
         }
         return null;
     }
-    
-    public void deletar (int id) {
+
+    protected void deletar(int id) {
         try {
             new DeleteDAO(tipo).deletarObjeto(id);
-        } catch (Exception e){}
+        } catch (Exception e) {
+        }
     }
-    
+
     public void criarRelatorio(List<T> lista) {
         new GenericREL(tipo).criarRelatorio(lista);
     }
