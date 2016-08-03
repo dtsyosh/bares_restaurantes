@@ -18,11 +18,11 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
  * @author yosh
  * @param <T>
  */
-public class GenericREL<T> {
+public class GeralREL<T> {
 
     private Class<T> tipo;
 
-    public GenericREL(Class<T> tipo) {
+    public GeralREL(Class<T> tipo) {
         this.tipo = tipo;
     }
 
