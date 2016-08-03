@@ -12,17 +12,25 @@ package model;
 public class produtos {
     
     private int id_produto;
-    private int estoque_id;
     private int categoria_id;
+    private Double valor;
     private String nome_produto;
 
-    public produtos(int estoque_id, int categoria_id, String nome_produto) {
-        this.estoque_id = estoque_id;
+    public produtos(int categoria_id, String nome_produto, Double valor) {
         this.categoria_id = categoria_id;
         this.nome_produto = nome_produto;
+        this.valor = valor;
     }
 
     public produtos() {
+    }
+
+    public Double getValor() {
+        return valor;
+    }
+
+    public void setValor(Double valor) {
+        this.valor = valor;
     }
     
     
@@ -35,13 +43,6 @@ public class produtos {
         this.id_produto = id_produto;
     }
 
-    public int getEstoque_id() {
-        return estoque_id;
-    }
-
-    public void setEstoque_id(int estoque_id) {
-        this.estoque_id = estoque_id;
-    }
 
     public int getCategoria_id() {
         return categoria_id;
