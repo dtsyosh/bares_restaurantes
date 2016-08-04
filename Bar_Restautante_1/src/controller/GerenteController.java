@@ -21,6 +21,15 @@ public class GerenteController extends GenericController {
         this.setTipo(produtos.class);
         insert(new produtos(categoria_id, nome_produto, valor));
     }
+
+    public void gerarRelatorioFuncionarios() {
+        this.setTipo(funcionario.class);
+        gerarRelatorio();
+    }
+    
+    public void gerarRelatorioVendas() {
+        
+    }
     
 
 }
