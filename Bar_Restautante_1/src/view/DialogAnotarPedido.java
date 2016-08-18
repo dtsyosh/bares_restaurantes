@@ -4,6 +4,9 @@ import controller.ControllerGeral;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import model.mesas;
 import model.produtos;
 
 /**
@@ -15,23 +18,27 @@ public class DialogAnotarPedido extends javax.swing.JDialog {
     /**
      * Creates new form DialogAnotarPedido
      */
-    ControllerGeral controller;
     DefaultListModel listaProdutos, listaPedido;
-    List<produtos> produtos;
+    List<produtos> produtos, produtosPedido;
+    List<mesas> mesas;
+    
     public DialogAnotarPedido(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        jList1.setModel(new DefaultListModel());
-        jList2.setModel(new DefaultListModel());
+        jListProdutos.setModel(new DefaultListModel());
+        jListPedido.setModel(new DefaultListModel());
         
         produtos = new ArrayList();
+        produtosPedido = new ArrayList();
         
-        listaProdutos = (DefaultListModel) jList1.getModel();
-        listaPedido = (DefaultListModel) jList2.getModel();
+        listaProdutos = (DefaultListModel) jListProdutos.getModel();
+        listaPedido = (DefaultListModel) jListPedido.getModel();
         
         
         produtos = new ControllerGeral(produtos.class).select();
-        preencherListaProdutos(produtos);
+        atualizarJListProdutos(produtos);
+        
+        popularCbMesa(new ControllerGeral(mesas.class).select());
     }
 
     /**
@@ -46,10 +53,10 @@ public class DialogAnotarPedido extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         cbMesa = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        jListProdutos = new javax.swing.JList<>();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList<>();
+        jListPedido = new javax.swing.JList<>();
         jLabel3 = new javax.swing.JLabel();
         btnOK = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
@@ -60,12 +67,24 @@ public class DialogAnotarPedido extends javax.swing.JDialog {
 
         cbMesa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jScrollPane1.setViewportView(jList1);
+        jListProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jListProdutosMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jListProdutos);
 
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Produtos");
 
-        jScrollPane2.setViewportView(jList2);
+        jListPedido.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jListPedidoMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jListPedido);
 
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Pedido");
 
         btnOK.setText("OK");
@@ -82,31 +101,24 @@ public class DialogAnotarPedido extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(66, 66, 66)
-                        .addComponent(jLabel2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cbMesa, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel1)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(cbMesa, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnOK)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnCancelar))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(27, 27, 27))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(92, 92, 92))))
+                        .addComponent(btnOK)
+                        .addGap(21, 21, 21)
+                        .addComponent(btnCancelar))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -134,10 +146,47 @@ public class DialogAnotarPedido extends javax.swing.JDialog {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void jListProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListProdutosMouseClicked
+        JList list =  (JList) evt.getSource();
+        
+        if(evt.getClickCount() == 2) { //Pega o duplo click do mouse
+            int indice = list.locationToIndex(evt.getPoint());
+            int quantidade = Integer.parseInt(JOptionPane.showInputDialog("Quantidade"));
+            for(int i = 0; i < quantidade; i++)
+                produtosPedido.add(produtos.get(jListProdutos.getSelectedIndex()));
+            atualizarJListPedido(produtosPedido);
+        }
+    }//GEN-LAST:event_jListProdutosMouseClicked
+
+    private void jListPedidoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListPedidoMouseClicked
+        JList list =  (JList) evt.getSource();
+        
+        if(evt.getClickCount() == 2) { //Pega o duplo click do mouse
+            int indice = list.locationToIndex(evt.getPoint());
+            produtosPedido.remove(jListPedido.getSelectedIndex());
+            atualizarJListPedido(produtosPedido);
+        }
+    }//GEN-LAST:event_jListPedidoMouseClicked
     
-    private void preencherListaProdutos(List<produtos> lista) {
+    private void atualizarJListProdutos(List<produtos> lista) {
+        listaProdutos.clear();
         for (produtos o : lista) {
             listaProdutos.addElement(o.getNome_produto());
+        }
+    }
+    
+    private void atualizarJListPedido(List<produtos> lista) {
+        listaPedido.clear();
+        for (produtos o : lista) {
+            listaPedido.addElement(o.getNome_produto());
+        }
+    }
+    
+    private void popularCbMesa(List<mesas> mesas) {
+        cbMesa.removeAllItems();
+        for (mesas o : mesas) {
+            cbMesa.addItem(o.getNum());
         }
     }
     /**
@@ -189,8 +238,8 @@ public class DialogAnotarPedido extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JList<String> jList1;
-    private javax.swing.JList<String> jList2;
+    private javax.swing.JList<String> jListPedido;
+    private javax.swing.JList<String> jListProdutos;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
