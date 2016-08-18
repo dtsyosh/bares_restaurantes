@@ -5,7 +5,6 @@ import dao.InsertDAO;
 import dao.SelectDAO;
 import java.util.List;
 import model.login;
-import relatorios.GeralREL;
 
 /**
  *
@@ -13,11 +12,11 @@ import relatorios.GeralREL;
  * @param <T>
  *
  */
-public abstract class GenericController<T> {
+public class Controller<T> {
 
     protected Class<T> tipo;
 
-    public GenericController() {
+    public Controller() {
     }
 
     public Class<T> getTipo() {
@@ -57,10 +56,6 @@ public abstract class GenericController<T> {
             new DeleteDAO(tipo).deletarObjeto(id);
         } catch (Exception e) {
         }
-    }
-
-    public void gerarRelatorio() {
-        new GeralREL(tipo).criarRelatorio(select());
     }
 
     public boolean logar(String login, String senha, int nivel) {

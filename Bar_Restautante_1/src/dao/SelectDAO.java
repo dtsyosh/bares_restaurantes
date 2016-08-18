@@ -118,5 +118,9 @@ public class SelectDAO<T> extends GenericDAO<T> {
 
         return lista;
     }
+    
+    public void selectRelatorioVenda() {
+        //implementar
+    }
 
 }
