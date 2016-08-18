@@ -4,7 +4,6 @@ import dao.DeleteDAO;
 import dao.InsertDAO;
 import dao.SelectDAO;
 import java.util.List;
-import model.login;
 
 /**
  *
@@ -57,19 +56,4 @@ public class Controller<T> {
         } catch (Exception e) {
         }
     }
-
-    public boolean logar(String login, String senha, int nivel) {
-        try {
-            List<login> lista = new SelectDAO(login.class).selecionarObjetos();
-
-            if (lista.stream().anyMatch((x) -> (x.getLogin().equals(login) && x.getSenha().equals(senha) && x.getNivel() == nivel))) {
-                return true;
-            }
-
-        } catch (Exception e) {
-        }
-
-        return false;
-    }
-
 }
