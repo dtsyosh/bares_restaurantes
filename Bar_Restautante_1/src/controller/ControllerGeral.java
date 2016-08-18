@@ -37,14 +37,14 @@ public class ControllerGeral<T> {
         this.tipo = tipo;
     }
 
-    protected void inserir(List<T> lista) {
+    public void inserir(List<T> lista) {
         try {
             new InsertDAO(tipo).inserirObjetos(lista);
         } catch (Exception e) {
         }
     }
 
-    protected void insert(T novoDado) {
+    public void insert(T novoDado) {
         try {
             new InsertDAO(tipo).inserirObjetos(novoDado);
             this.listaSelect = new SelectDAO(tipo).selecionarObjetos();
@@ -56,7 +56,7 @@ public class ControllerGeral<T> {
         return this.listaSelect;
     }
 
-    protected void delete(int id) {
+    public void delete(int id) {
         try {
             new DeleteDAO(tipo).deletarObjeto(id);
         } catch (Exception e) {
