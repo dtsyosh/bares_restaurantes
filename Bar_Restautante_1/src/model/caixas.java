@@ -5,34 +5,32 @@
  */
 package model;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  *
  * @author yosh
  */
-public class caixa {
-    
+public class caixas {
+
     private int id_caixa;
     private int funcionario_id;
     private int estado_id;
-    private Date data_hora_abertura;
-    private Date data_hora_fechamento;
+    private Timestamp data_hora_abertura;
+    private Timestamp data_hora_fechamento;
     private Double valor_inicial;
     private Double valor_final;
 
-    public caixa(int funcionario_id, int estado_id, Date data_hora_abertura, Double valor_inicial) {
+    public caixas(int funcionario_id, int estado_id, Timestamp data_hora_abertura, Double valor_inicial) {
         this.funcionario_id = funcionario_id;
         this.estado_id = estado_id;
         this.data_hora_abertura = data_hora_abertura;
         this.valor_inicial = valor_inicial;
     }
 
-    public caixa() {
+    public caixas() {
     }
 
-    
-    
     public int getId_caixa() {
         return id_caixa;
     }
@@ -57,19 +55,19 @@ public class caixa {
         this.estado_id = estado_id;
     }
 
-    public Date getData_hora_abertura() {
+    public Timestamp getData_hora_abertura() {
         return data_hora_abertura;
     }
 
-    public void setData_hora_abertura(Date data_hora_abertura) {
+    public void setData_hora_abertura(Timestamp data_hora_abertura) {
         this.data_hora_abertura = data_hora_abertura;
     }
 
-    public Date getData_hora_fechamento() {
+    public Timestamp getData_hora_fechamento() {
         return data_hora_fechamento;
     }
 
-    public void setData_hora_fechamento(Date data_hora_fechamento) {
+    public void setData_hora_fechamento(Timestamp data_hora_fechamento) {
         this.data_hora_fechamento = data_hora_fechamento;
     }
 
@@ -88,6 +86,5 @@ public class caixa {
     public void setValor_final(Double valor_final) {
         this.valor_final = valor_final;
     }
-    
-    
+
 }
