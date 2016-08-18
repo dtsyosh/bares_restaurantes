@@ -13,24 +13,24 @@ public class produtos {
     
     private int id_produto;
     private int categoria_id;
-    private Double valor;
+    private Double preco;
     private String nome_produto;
 
     public produtos(int categoria_id, String nome_produto, Double valor) {
         this.categoria_id = categoria_id;
         this.nome_produto = nome_produto;
-        this.valor = valor;
+        this.preco = valor;
     }
 
     public produtos() {
     }
 
-    public Double getValor() {
-        return valor;
+    public Double getPreco() {
+        return preco;
     }
 
-    public void setValor(Double valor) {
-        this.valor = valor;
+    public void setPreco(Double valor) {
+        this.preco = valor;
     }
     
     
