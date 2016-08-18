@@ -176,9 +176,12 @@ public class FrmInicio extends javax.swing.JFrame {
             int rg = Integer.parseInt(tfRG.getText());
             String telefone = tfTelefone.getText();
             new ControllerGeral(funcionarios.class).insert(new funcionarios(nome, telefone, rg, 3));
-        } catch(NullPointerException e) {
+        } catch(NullPointerException | NumberFormatException e) {
             JOptionPane.showMessageDialog(rootPane, "Preencha corretamente os campos!");
+            return;
         }
+        
+        JOptionPane.showMessageDialog(rootPane, "Cadastro efetuado com sucesso!");
     }
     /**
      * @param args the command line arguments
