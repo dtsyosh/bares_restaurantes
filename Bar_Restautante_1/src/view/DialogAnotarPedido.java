@@ -1,15 +1,13 @@
 package view;
 
 import controller.ControllerGeral;
-import java.util.Date;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.util.converter.LocalDateTimeStringConverter;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import model.funcionarios;
 import model.mesas;
 import model.pedidos;
 import model.produtos;
@@ -29,29 +27,29 @@ public class DialogAnotarPedido extends javax.swing.JDialog {
     List<produtos> listaProdutos, listaProdutosPedido;
     List<mesas> listaMesas;
     List<pedidos> listaPedidos;
-    
+    funcionarios funcionario;
+
     public DialogAnotarPedido(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         jListProdutos.setModel(new DefaultListModel());
         jListPedido.setModel(new DefaultListModel());
-        
+
         listaProdutos = new ArrayList();
         listaProdutosPedido = new ArrayList();
         listaMesas = new ArrayList();
         listaPedidos = new ArrayList();
         listQuantidade = new ArrayList();
-        
+
         DefaultJListProdutos = (DefaultListModel) jListProdutos.getModel();
         DefaultJListPedido = (DefaultListModel) jListPedido.getModel();
-        
-        
+
         listaProdutos = new ControllerGeral(produtos.class).select();
         atualizarJListProdutos(listaProdutos);
-        
+
         listaMesas = new ControllerGeral(mesas.class).select();
         popularCbMesa(listaMesas);
-        
+
         listaPedidos = new ControllerGeral(pedidos.class).select();
     }
 
@@ -167,28 +165,30 @@ public class DialogAnotarPedido extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void jListProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListProdutosMouseClicked
-        JList list =  (JList) evt.getSource();
-        
-        if(evt.getClickCount() == 2) { //Pega o duplo click do mouse
+        JList list = (JList) evt.getSource();
+
+        if (evt.getClickCount() == 2) { //Pega o duplo click do mouse
             int indice = list.locationToIndex(evt.getPoint());
-            
-            int quantidade = Integer.parseInt(JOptionPane.showInputDialog("Quantidade")); //Quantidade do produto
-            listQuantidade.add(quantidade); //Lista que guarda as respectivas quantidades para usar depois
-            
-            listaProdutosPedido.add(listaProdutos.get(jListProdutos.getSelectedIndex()));
-            atualizarJListPedido(listaProdutosPedido);
+            try {
+                int quantidade = Integer.parseInt(JOptionPane.showInputDialog("Quantidade")); //Quantidade do produto
+                listQuantidade.add(quantidade); //Lista que guarda as respectivas quantidades para usar depois
+
+                listaProdutosPedido.add(listaProdutos.get(jListProdutos.getSelectedIndex()));
+                atualizarJListPedido(listaProdutosPedido);
+            } catch (NullPointerException | NumberFormatException e) {
+            }
         }
     }//GEN-LAST:event_jListProdutosMouseClicked
 
     private void jListPedidoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListPedidoMouseClicked
-        JList list =  (JList) evt.getSource();
-        
-        if(evt.getClickCount() == 2) { //Pega o duplo click do mouse
+        JList list = (JList) evt.getSource();
+
+        if (evt.getClickCount() == 2) { //Pega o duplo click do mouse
             int indice = list.locationToIndex(evt.getPoint());
-            
+
             listaProdutosPedido.remove(jListPedido.getSelectedIndex());
             listQuantidade.remove(jListPedido.getSelectedIndex());
-            
+
             atualizarJListPedido(listaProdutosPedido);
         }
     }//GEN-LAST:event_jListPedidoMouseClicked
@@ -196,24 +196,35 @@ public class DialogAnotarPedido extends javax.swing.JDialog {
     private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
         int indiceMesa = cbMesa.getSelectedIndex();
         int indicePedido = -1;
-        
-        
-        Date data = new Date();
-        Timestamp tsData = new Timestamp(data.getTime());
+        int ativo = 3;
 
-        for(pedidos p : listaPedidos) {
-            if(p.getMesa_id() == listaMesas.get(indiceMesa).getId_mesa()) {     //Se já existir um pedido na mesa
+        Timestamp tsData = new Timestamp(System.currentTimeMillis());
+
+        for (pedidos p : listaPedidos) {
+            if (p.getMesa_id() == listaMesas.get(indiceMesa).getId_mesa() && p.getEstado_id() == ativo) {     //Se já existir um pedido na mesa
                 //Adiciona somente em produtos_pedidos
                 indicePedido = p.getId_pedido();
                 break;
-                
+
             }
         }
-        
+
         ArrayList listaProdutosPedidos = new ArrayList();
-        if(indicePedido != -1) {
+
+        if (indicePedido != -1) { //Caso já tenha um pedido em aberto na mesa
             for (int i = 0; i < DefaultJListPedido.getSize(); i++) {
                 listaProdutosPedidos.add(new produtos_pedidos(listaProdutosPedido.get(i).getId_produto(), indicePedido, tsData, listQuantidade.get(i)));
+            }
+
+            new ControllerGeral(produtos_pedidos.class).insertList(listaProdutosPedidos);
+
+            this.dispose();
+        } else {    //Se não tiver nenhum pedido em aberto na mesa
+            int idPedido = listaPedidos.get(listaPedidos.size() - 1).getId_pedido() + 1;
+
+            new ControllerGeral(pedidos.class).insert(new pedidos(funcionario.getId_funcionario(), listaMesas.get(indiceMesa).getId_mesa(), ativo));
+            for (int i = 0; i < DefaultJListPedido.getSize(); i++) {
+                listaProdutosPedidos.add(new produtos_pedidos(listaProdutosPedido.get(i).getId_produto(), idPedido, tsData, listQuantidade.get(i)));
             }
             
             new ControllerGeral(produtos_pedidos.class).insertList(listaProdutosPedidos);
@@ -223,14 +234,14 @@ public class DialogAnotarPedido extends javax.swing.JDialog {
         //Se tiver, adicionar produtos à esse pedido
         //Se não tiver, criar um pedido novo
     }//GEN-LAST:event_btnOKActionPerformed
-    
+
     private void atualizarJListProdutos(List<produtos> lista) {
         DefaultJListProdutos.clear();
         for (produtos o : lista) {
             DefaultJListProdutos.addElement(o.getNome_produto());
         }
     }
-    
+
     private void atualizarJListPedido(List<produtos> lista) {
         DefaultJListPedido.clear();
         int i = 0;
@@ -238,13 +249,22 @@ public class DialogAnotarPedido extends javax.swing.JDialog {
             DefaultJListPedido.addElement(listQuantidade.get(i++) + " - " + o.getNome_produto());
         }
     }
-    
+
     private void popularCbMesa(List<mesas> mesas) {
         cbMesa.removeAllItems();
         for (mesas o : mesas) {
             cbMesa.addItem(o.getNum());
         }
     }
+
+    public funcionarios getFuncionario() {
+        return funcionario;
+    }
+
+    public void setFuncionario(funcionarios funcionario) {
+        this.funcionario = funcionario;
+    }
+
     /**
      * @param args the command line arguments
      */
