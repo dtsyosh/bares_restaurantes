@@ -48,7 +48,7 @@ public abstract class GenericDAO<T> {
      *
      * @param usePlaceHolders
      *
-     * verdadeiro, se for usado o "?" do PreparedStatment no lugar do nome da
+     * verdadeiro, se for usado o "?" do PreparedStatement no lugar do nome da
      * variavel campo
      *
      * @return
