@@ -37,10 +37,11 @@ public class ControllerGeral<T> {
         this.tipo = tipo;
     }
 
-    public void inserir(List<T> lista) {
+    public void insertList(List<T> lista) {
         try {
             new InsertDAO(tipo).inserirObjetos(lista);
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
