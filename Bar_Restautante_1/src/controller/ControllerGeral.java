@@ -3,6 +3,7 @@ package controller;
 import dao.DeleteDAO;
 import dao.InsertDAO;
 import dao.SelectDAO;
+import dao.UpdateDAO;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,6 +62,14 @@ public class ControllerGeral<T> {
         try {
             new DeleteDAO(tipo).deletarObjeto(id);
         } catch (Exception e) {
+        }
+    }
+    
+    public void atualizar(String set, String where) {
+        try {
+            new UpdateDAO(tipo).atualizarObjeto(set, where);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
