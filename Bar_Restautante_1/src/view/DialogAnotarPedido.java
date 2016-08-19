@@ -1,13 +1,19 @@
 package view;
 
 import controller.ControllerGeral;
+import java.util.Date;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.util.converter.LocalDateTimeStringConverter;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import model.mesas;
+import model.pedidos;
 import model.produtos;
+import model.produtos_pedidos;
 
 /**
  *
@@ -18,9 +24,11 @@ public class DialogAnotarPedido extends javax.swing.JDialog {
     /**
      * Creates new form DialogAnotarPedido
      */
-    DefaultListModel listaProdutos, listaPedido;
-    List<produtos> produtos, produtosPedido;
-    List<mesas> mesas;
+    DefaultListModel DefaultJListProdutos, DefaultJListPedido;
+    List<Integer> listQuantidade;
+    List<produtos> listaProdutos, listaProdutosPedido;
+    List<mesas> listaMesas;
+    List<pedidos> listaPedidos;
     
     public DialogAnotarPedido(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -28,17 +36,23 @@ public class DialogAnotarPedido extends javax.swing.JDialog {
         jListProdutos.setModel(new DefaultListModel());
         jListPedido.setModel(new DefaultListModel());
         
-        produtos = new ArrayList();
-        produtosPedido = new ArrayList();
+        listaProdutos = new ArrayList();
+        listaProdutosPedido = new ArrayList();
+        listaMesas = new ArrayList();
+        listaPedidos = new ArrayList();
+        listQuantidade = new ArrayList();
         
-        listaProdutos = (DefaultListModel) jListProdutos.getModel();
-        listaPedido = (DefaultListModel) jListPedido.getModel();
+        DefaultJListProdutos = (DefaultListModel) jListProdutos.getModel();
+        DefaultJListPedido = (DefaultListModel) jListPedido.getModel();
         
         
-        produtos = new ControllerGeral(produtos.class).select();
-        atualizarJListProdutos(produtos);
+        listaProdutos = new ControllerGeral(produtos.class).select();
+        atualizarJListProdutos(listaProdutos);
         
-        popularCbMesa(new ControllerGeral(mesas.class).select());
+        listaMesas = new ControllerGeral(mesas.class).select();
+        popularCbMesa(listaMesas);
+        
+        listaPedidos = new ControllerGeral(pedidos.class).select();
     }
 
     /**
@@ -88,6 +102,11 @@ public class DialogAnotarPedido extends javax.swing.JDialog {
         jLabel3.setText("Pedido");
 
         btnOK.setText("OK");
+        btnOK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOKActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -152,10 +171,12 @@ public class DialogAnotarPedido extends javax.swing.JDialog {
         
         if(evt.getClickCount() == 2) { //Pega o duplo click do mouse
             int indice = list.locationToIndex(evt.getPoint());
-            int quantidade = Integer.parseInt(JOptionPane.showInputDialog("Quantidade"));
-            for(int i = 0; i < quantidade; i++)
-                produtosPedido.add(produtos.get(jListProdutos.getSelectedIndex()));
-            atualizarJListPedido(produtosPedido);
+            
+            int quantidade = Integer.parseInt(JOptionPane.showInputDialog("Quantidade")); //Quantidade do produto
+            listQuantidade.add(quantidade); //Lista que guarda as respectivas quantidades para usar depois
+            
+            listaProdutosPedido.add(listaProdutos.get(jListProdutos.getSelectedIndex()));
+            atualizarJListPedido(listaProdutosPedido);
         }
     }//GEN-LAST:event_jListProdutosMouseClicked
 
@@ -164,22 +185,57 @@ public class DialogAnotarPedido extends javax.swing.JDialog {
         
         if(evt.getClickCount() == 2) { //Pega o duplo click do mouse
             int indice = list.locationToIndex(evt.getPoint());
-            produtosPedido.remove(jListPedido.getSelectedIndex());
-            atualizarJListPedido(produtosPedido);
+            
+            listaProdutosPedido.remove(jListPedido.getSelectedIndex());
+            listQuantidade.remove(jListPedido.getSelectedIndex());
+            
+            atualizarJListPedido(listaProdutosPedido);
         }
     }//GEN-LAST:event_jListPedidoMouseClicked
+
+    private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
+        int indiceMesa = cbMesa.getSelectedIndex();
+        int indicePedido = -1;
+        
+        
+        Date data = new Date();
+        Timestamp tsData = new Timestamp(data.getTime());
+
+        for(pedidos p : listaPedidos) {
+            if(p.getMesa_id() == listaMesas.get(indiceMesa).getId_mesa()) {     //Se já existir um pedido na mesa
+                //Adiciona somente em produtos_pedidos
+                indicePedido = p.getId_pedido();
+                break;
+                
+            }
+        }
+        
+        ArrayList listaProdutosPedidos = new ArrayList();
+        if(indicePedido != -1) {
+            for (int i = 0; i < DefaultJListPedido.getSize(); i++) {
+                listaProdutosPedidos.add(new produtos_pedidos(listaProdutosPedido.get(i).getId_produto(), indicePedido, tsData, listQuantidade.get(i)));
+            }
+            
+            new ControllerGeral(produtos_pedidos.class).insertList(listaProdutosPedidos);
+            this.dispose();
+        }
+        //Procurar se a mesa já não tem um pedido em aberto
+        //Se tiver, adicionar produtos à esse pedido
+        //Se não tiver, criar um pedido novo
+    }//GEN-LAST:event_btnOKActionPerformed
     
     private void atualizarJListProdutos(List<produtos> lista) {
-        listaProdutos.clear();
+        DefaultJListProdutos.clear();
         for (produtos o : lista) {
-            listaProdutos.addElement(o.getNome_produto());
+            DefaultJListProdutos.addElement(o.getNome_produto());
         }
     }
     
     private void atualizarJListPedido(List<produtos> lista) {
-        listaPedido.clear();
+        DefaultJListPedido.clear();
+        int i = 0;
         for (produtos o : lista) {
-            listaPedido.addElement(o.getNome_produto());
+            DefaultJListPedido.addElement(listQuantidade.get(i++) + " - " + o.getNome_produto());
         }
     }
     
