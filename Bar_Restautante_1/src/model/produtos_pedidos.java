@@ -6,6 +6,7 @@
 package model;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  *
@@ -16,24 +17,34 @@ public class produtos_pedidos {
     private int id_produtos_pedidos;
     private int produto_id;
     private int pedido_id;
-    private Date data_hora;
+    private Timestamp data_hora;
+    private int qtde;
 
-    public produtos_pedidos(int produto_id, int pedido_id, Date data_hora) {
+    public produtos_pedidos(int produto_id, int pedido_id, Timestamp data_hora, int qtde) {
         this.produto_id = produto_id;
         this.pedido_id = pedido_id;
         this.data_hora = data_hora;
+        this.qtde = qtde;
     }
 
     public produtos_pedidos() {
     }
+
+    public int getQtde() {
+        return qtde;
+    }
+
+    public void setQtde(int qtde) {
+        this.qtde = qtde;
+    }
     
     
 
-    public Date getData_hora() {
+    public Timestamp getData_hora() {
         return data_hora;
     }
 
-    public void setData_hora(Date data_hora) {
+    public void setData_hora(Timestamp data_hora) {
         this.data_hora = data_hora;
     }
 
