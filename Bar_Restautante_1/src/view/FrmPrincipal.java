@@ -1,7 +1,7 @@
 package view;
 
-import controller.ControllerGeral;
 import javax.swing.table.DefaultTableModel;
+import model.funcionarios;
 
 /**
  *
@@ -10,6 +10,7 @@ import javax.swing.table.DefaultTableModel;
 public class FrmPrincipal extends javax.swing.JFrame {
 
     DefaultTableModel tabelaPedidos, tabelaProdutos;
+    funcionarios funcionario;
     public FrmPrincipal() {
         initComponents();
         
@@ -221,7 +222,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void btnAnotarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnotarPedidoActionPerformed
         new DialogAnotarPedido(this, true).setVisible(true);
     }//GEN-LAST:event_btnAnotarPedidoActionPerformed
-
+    
+    public void pegarFuncionario(funcionarios funcionario) {
+        this.funcionario = funcionario;
+        lblNomeFuncionario.setText(funcionario.getNome_funcionario());
+    }
     /**
      * @param args the command line arguments
      */
@@ -253,7 +258,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmPrincipal().setVisible(true);
             }
         });
     }
