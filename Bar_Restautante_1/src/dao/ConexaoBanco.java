@@ -19,7 +19,7 @@ public class ConexaoBanco {
 
         try{
             Class.forName("com.mysql.jdbc.Driver");           
-            return DriverManager.getConnection("jdbc:mysql://localhost/bar_restaurante", "root", "3bjmf82,");
+            return DriverManager.getConnection("jdbc:mysql://localhost/bar_restaurante?zeroDateTimeBehavior=convertToNull", "root", "3bjmf82,");
         }catch(SQLException e){
             throw new RuntimeException(e);
         }
