@@ -155,9 +155,9 @@ public class FrmInicio extends javax.swing.JFrame {
             tfTelefone.setEnabled(true);
             btnCadastrar.setEnabled(true);
         } else {
-            this.dispose();
             FrmPrincipal telaPrincipal = new FrmPrincipal();
             telaPrincipal.pegarFuncionario(funcionario);
+            this.dispose();
             telaPrincipal.setVisible(true);
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
