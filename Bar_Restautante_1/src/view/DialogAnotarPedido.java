@@ -74,6 +74,7 @@ public class DialogAnotarPedido extends javax.swing.JDialog {
         btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jLabel1.setText("Mesa");
 
@@ -220,8 +221,10 @@ public class DialogAnotarPedido extends javax.swing.JDialog {
 
             this.dispose();
         } else {    //Se não tiver nenhum pedido em aberto na mesa
-            int idPedido = listaPedidos.get(listaPedidos.size() - 1).getId_pedido() + 1;
-
+            int idPedido = 1;
+            try{
+                idPedido = listaPedidos.get(listaPedidos.size() - 1).getId_pedido() + 1;
+            } catch(IndexOutOfBoundsException e) {}
             new ControllerGeral(pedidos.class).insert(new pedidos(funcionario.getId_funcionario(), listaMesas.get(indiceMesa).getId_mesa(), ativo));
             for (int i = 0; i < DefaultJListPedido.getSize(); i++) {
                 listaProdutosPedidos.add(new produtos_pedidos(listaProdutosPedido.get(i).getId_produto(), idPedido, tsData, listQuantidade.get(i)));

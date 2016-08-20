@@ -6,6 +6,7 @@ import dao.SelectDAO;
 import dao.UpdateDAO;
 import java.util.ArrayList;
 import java.util.List;
+import model.estado;
 
 /**
  *
@@ -65,9 +66,9 @@ public class ControllerGeral<T> {
         }
     }
     
-    public void atualizar(String set, String where) {
+    public void atualizarEstado(int estadoId, int id) {
         try {
-            new UpdateDAO(tipo).atualizarObjeto(set, where);
+            new UpdateDAO(tipo).atualizarObjeto(estadoId, id);
         } catch (Exception e) {
             e.printStackTrace();
         }

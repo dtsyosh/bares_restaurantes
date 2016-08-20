@@ -6,6 +6,7 @@
 package model;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  *
@@ -17,16 +18,26 @@ public class pagamentos {
     private int caixa_id;
     private int pedido_id;
     private int forma_pgto_id;
-    private Date data_hora;
-
-    public pagamentos(int caixa_id, int pedido_id, int forma_pgto_id, Date data_hora) {
+    private Timestamp data_hora;
+    private double valor;
+    
+    public pagamentos(int caixa_id, int pedido_id, int forma_pgto_id, Timestamp data_hora, double valor) {
         this.caixa_id = caixa_id;
         this.pedido_id = pedido_id;
         this.forma_pgto_id = forma_pgto_id;
         this.data_hora = data_hora;
+        this.valor = valor;
     }
 
     public pagamentos() {
+    }
+
+    public double getValor() {
+        return valor;
+    }
+
+    public void setValor(double valor) {
+        this.valor = valor;
     }
     
     
@@ -62,11 +73,11 @@ public class pagamentos {
         this.forma_pgto_id = forma_pgto_id;
     }
 
-    public Date getData_hora() {
+    public Timestamp getData_hora() {
         return data_hora;
     }
 
-    public void setData_hora(Date data_hora) {
+    public void setData_hora(Timestamp data_hora) {
         this.data_hora = data_hora;
     }
 
